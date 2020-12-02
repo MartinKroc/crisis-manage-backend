@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,4 +22,10 @@ public class DangerType {
 
     @Column(nullable = true)
     private String description;
+
+    @OneToMany(mappedBy = "danger")
+    private List<Alert> alerts;
+
+    @OneToMany(mappedBy = "dangerId")
+    private List<AlertProposition> alertPropositions;
 }

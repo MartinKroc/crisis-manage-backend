@@ -25,6 +25,11 @@ public class AlertProposition {
     @Column(nullable = true)
     private String image;
 
-    private long userId;
-    private long dangerTypeId;
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne()
+    @JoinColumn(name = "danger_id")
+    private DangerType dangerId;
 }

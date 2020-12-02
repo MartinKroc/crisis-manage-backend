@@ -1,0 +1,12 @@
+[
+  {
+    "station": {
+      "cords": "dafsad",
+      "name": "pierwsza",
+      "warningLevel": 3,
+      "alertLevel": 5
+    },
+    "waterLevel": 22,
+    "date": "2007-12-03 10:15:30"
+  }
+]

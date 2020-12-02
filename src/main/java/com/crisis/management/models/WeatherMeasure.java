@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -18,10 +17,18 @@ public class WeatherMeasure {
     private long measureId;
 
     @Column(nullable = false)
-    private int waterLevel;
+    private int temp;
 
     @Column(nullable = false)
-    private LocalDateTime date;
+    private int pressure;
 
-    private long stationId;
+    @Column(nullable = false)
+    private int smogLevel;
+
+    @Column(nullable = false)
+    private int humidity;
+
+    @ManyToOne()
+    @JoinColumn(name = "station_id")
+    private WeatherStation weatherstation;
 }

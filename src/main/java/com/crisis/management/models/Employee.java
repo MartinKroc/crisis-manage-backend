@@ -19,5 +19,7 @@ public class Employee {
     @Column(nullable = false)
     private String role;
 
-    private long userId;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User userId;
 }
