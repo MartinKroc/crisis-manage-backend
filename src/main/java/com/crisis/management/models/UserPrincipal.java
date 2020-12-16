@@ -14,19 +14,19 @@ import java.util.stream.Collectors;
 public class UserPrincipal implements UserDetails {
 
     private Long id;
-    private String email;
     private String username;
-    private String password;
+    private String email;
     private String tel;
+    private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    private UserPrincipal(Long id, String email,String username, String password, String tel, Collection<? extends GrantedAuthority> authorities) {
+    private UserPrincipal(Long id, String username, String email, String tel, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.email = email;
         this.username = username;
-        this.password = password;
+        this.email = email;
         this.tel = tel;
+        this.password = password;
         this.authorities = authorities;
 
     }
@@ -38,10 +38,10 @@ public class UserPrincipal implements UserDetails {
                         .collect(Collectors.toList());
         return new UserPrincipal(
                 user.getId(),
-                user.getEmail(),
                 user.getUsername(),
-                user.getPassword(),
+                user.getEmail(),
                 user.getTel(),
+                user.getPassword(),
                 authorities
         );
     }
@@ -58,7 +58,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override

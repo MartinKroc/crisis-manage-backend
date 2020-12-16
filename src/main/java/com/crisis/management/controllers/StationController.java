@@ -2,12 +2,10 @@ package com.crisis.management.controllers;
 
 import com.crisis.management.dto.WaterStationDto;
 import com.crisis.management.dto.WeatherStationDto;
+import com.crisis.management.models.WeatherStation;
 import com.crisis.management.services.WaterStationService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,8 +22,18 @@ public class StationController {
         return waterStationService.getWaterStations();
     }
 
-    @GetMapping("weather")
+    @GetMapping("/weather")
     public List<WeatherStationDto> getWeatherStations() {
         return waterStationService.getWeatherStations();
+    }
+
+    @GetMapping("/water/{stationId}")
+    public WaterStationDto getWaterStationById(@PathVariable("stationId") long stationId) {
+        return waterStationService.getWaterStationById(stationId);
+    }
+
+    @GetMapping("/weather/{stationId}")
+    public WeatherStationDto getWeatherStationById(@PathVariable("stationId") long stationId) {
+        return waterStationService.getWeatherStationById(stationId);
     }
 }

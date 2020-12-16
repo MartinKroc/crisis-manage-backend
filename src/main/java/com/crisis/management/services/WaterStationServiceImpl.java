@@ -27,4 +27,14 @@ public class WaterStationServiceImpl implements WaterStationService {
     public List<WeatherStationDto> getWeatherStations() {
         return weatherStationRepo.findAll().stream().map(weatherStation -> WeatherStationDto.build(weatherStation)).collect(Collectors.toList());
     }
+
+    @Override
+    public WaterStationDto getWaterStationById(long stationId) {
+        return WaterStationDto.build(waterStationRepo.findById(stationId).orElseThrow(() -> new RuntimeException("Nie znaleziono stacji wodnej o id" + stationId)));
+    }
+
+    @Override
+    public WeatherStationDto getWeatherStationById(long stationId) {
+        return WeatherStationDto.build(weatherStationRepo.findById(stationId).orElseThrow(() -> new RuntimeException("Nie znaleziono stacji pogodowej o id" + stationId)));
+    }
 }

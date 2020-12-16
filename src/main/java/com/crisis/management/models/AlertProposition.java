@@ -16,14 +16,23 @@ public class AlertProposition {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long alertId;
 
-    @Column(nullable = false, unique = true)
-    private String cords;
+    @Column(nullable = false)
+    private String lat;
+
+    @Column(nullable = false)
+    private String lng;
 
     @Column(nullable = true)
     private String description;
 
     @Column(nullable = true)
     private String image;
+
+    @Column
+    private int points;
+
+    @Column
+    private boolean isAccepted;
 
     @ManyToOne()
     @JoinColumn(name = "user_id")

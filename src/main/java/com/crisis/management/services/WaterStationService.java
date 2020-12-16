@@ -9,4 +9,6 @@ import java.util.List;
 public interface WaterStationService {
     List<WaterStationDto> getWaterStations();
     List<WeatherStationDto> getWeatherStations();
+    WaterStationDto getWaterStationById(long stationId);
+    WeatherStationDto getWeatherStationById(long stationId);
 }

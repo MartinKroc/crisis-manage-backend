@@ -2,14 +2,17 @@ package com.crisis.management.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class WaterMeasure {
@@ -28,4 +31,7 @@ public class WaterMeasure {
     @ManyToOne()
     @JoinColumn(name="station_id")
     private WaterStation station;
+
+    @OneToMany(mappedBy = "waterMeasure")
+    private List<WaterAlert> waterAlerts;
 }

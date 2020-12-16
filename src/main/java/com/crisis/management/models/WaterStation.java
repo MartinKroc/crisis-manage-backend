@@ -20,7 +20,9 @@ public class WaterStation {
     private long id;
 
     @Column(nullable = false, unique = true)
-    private String cords;
+    private Double lat;
+    @Column(nullable = false, unique = true)
+    private Double lng;
 
     @Column(nullable = false)
     private String name;
@@ -33,4 +35,7 @@ public class WaterStation {
 
     @OneToMany(mappedBy = "station")
     private List<WaterMeasure> measures;
+
+    @OneToMany(mappedBy = "waterStation")
+    private List<WaterAlert> waterAlerts;
 }

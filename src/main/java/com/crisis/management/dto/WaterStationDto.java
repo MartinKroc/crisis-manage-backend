@@ -5,12 +5,13 @@ import lombok.Value;
 
 @Value
 public class WaterStationDto {
-    private String cords;
+    private Double lat;
+    private Double lng;
     private String name;
     private int alertLevel;
     private int warningLevel;
 
     public static WaterStationDto build(WaterStation waterStation) {
-        return new WaterStationDto(waterStation.getCords(),waterStation.getName(),waterStation.getAlertLevel(),waterStation.getWarningLevel());
+        return new WaterStationDto(waterStation.getLat(),waterStation.getLng(),waterStation.getName(),waterStation.getAlertLevel(),waterStation.getWarningLevel());
     };
 }

@@ -23,8 +23,14 @@ public class DangerType {
     @Column(nullable = true)
     private String description;
 
-    @OneToMany(mappedBy = "danger")
-    private List<Alert> alerts;
+/*    @OneToMany(mappedBy = "danger")
+    private List<Alert> alerts;*/
+
+    @OneToMany(mappedBy = "waterDanger")
+    private List<WaterAlert> waterAlerts;
+
+    @OneToMany(mappedBy = "weatherDanger")
+    private List<WeatherAlert> weatherAlerts;
 
     @OneToMany(mappedBy = "dangerId")
     private List<AlertProposition> alertPropositions;

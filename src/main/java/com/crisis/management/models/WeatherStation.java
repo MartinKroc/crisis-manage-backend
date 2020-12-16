@@ -18,11 +18,17 @@ public class WeatherStation {
     private long id;
 
     @Column(nullable = false, unique = true)
-    private String cords;
+    private Double lat;
+
+    @Column(nullable = false, unique = true)
+    private Double lng;
 
     @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "weatherstation")
     private List<WeatherMeasure> measures;
+
+    @OneToMany(mappedBy = "weatherStation")
+    private List<WeatherAlert> weatherAlerts;
 }

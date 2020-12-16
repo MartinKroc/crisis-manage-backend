@@ -1,6 +1,62 @@
 [
   {
-    "cords": "asdfas",
-    "name": "pierwsza s"
+    "lat": 50.868599,
+    "lng": 20.621208,
+    "name": "stacja pogodowa Żytnia"
+  },
+  {
+    "lat": 50.852089,
+    "lng": 20.691906,
+    "name": "stacja pogodowa Mójcza"
+  },
+  {
+    "lat": 50.848119,
+    "lng": 20.610952,
+    "name": "stacja pogodowa Baranówek"
+  },
+  {
+    "lat": 50.831109,
+    "lng": 20.666008,
+    "name": "stacja pogodowa Bukówka"
+  },
+  {
+    "lat": 50.835434,
+    "lng": 20.538701,
+    "name": "stacja pogodowa Słowik"
+  },
+  {
+    "lat": 50.854479,
+    "lng": 20.558431,
+    "name": "stacja pogodowa Białogon"
+  },
+  {
+    "lat": 50.894217,
+    "lng": 20.602185,
+    "name": "stacja pogodowa Herby"
+  },
+  {
+    "lat": 50.894278,
+    "lng": 20.650498,
+    "name": "stacja pogodowa Szydłówek"
+  },
+  {
+    "lat": 50.894720,
+    "lng": 20.740725,
+    "name": "stacja pogodowa Masłów"
+  },
+  {
+    "lat": 50.894950,
+    "lng": 20.631844,
+    "name": "stacja pogodowa Zagnańska"
+  },
+  {
+    "lat": 50.865161,
+    "lng": 20.673004,
+    "name": "stacja pogodowa Sandomierska"
+  },
+  {
+    "lat": 50.871612,
+    "lng": 20.631057,
+    "name": "stacja pogodowa Rynek"
   }
 ]
