@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class WaterAlert {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
