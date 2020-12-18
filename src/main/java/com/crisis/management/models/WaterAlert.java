@@ -2,6 +2,7 @@ package com.crisis.management.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class WaterAlert {
@@ -25,6 +27,8 @@ public class WaterAlert {
     @Column(nullable = false)
     private boolean isActive;
 
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "danger_id")
     private DangerType waterDanger;
@@ -32,8 +36,4 @@ public class WaterAlert {
     @ManyToOne
     @JoinColumn(name = "station_id")
     private WaterStation waterStation;
-
-    @ManyToOne
-    @JoinColumn(name = "water_measure")
-    private WaterMeasure waterMeasure;
 }

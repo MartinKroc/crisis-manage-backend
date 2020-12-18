@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,7 @@ public class AlertServiceImpl implements AlertService {
 
     private WaterAlertRepo waterAlertRepo;
     private WeatherAlertRepo weatherAlertRepo;
+    private AlertRepo alertRepo;
 
     private WaterStationRepo waterStationRepo;
     private WeatherStationRepo weatherStationRepo;
@@ -58,7 +61,8 @@ public class AlertServiceImpl implements AlertService {
     public AlertDto getAlerts() {
         List<WaterAlertDto> waterAlerts = waterAlertRepo.findAll().stream().map(waterAlert -> WaterAlertDto.build(waterAlert)).collect(Collectors.toList());
         List<WeatherAlertDto> weatherAlerts = weatherAlertRepo.findAll().stream().map(weatherAlert -> WeatherAlertDto.build(weatherAlert)).collect(Collectors.toList());
-        AlertDto ss= AlertDto.build(waterAlerts,weatherAlerts);
+        List<AlertTableDto> alerts = alertRepo.findAll().stream().map(alert -> AlertTableDto.build(alert)).collect(Collectors.toList());
+        AlertDto ss= AlertDto.build(waterAlerts,weatherAlerts,alerts);
         return ss;
     }
 
@@ -68,6 +72,41 @@ public class AlertServiceImpl implements AlertService {
             WaterStation waterStation = waterStationRepo.findById(addAlertDto.getWaterStationId()).orElseThrow(() -> new RuntimeException("Stacja nie została znaleziona"));
             DangerType dangerType = dangerTypeRepo.findById(addAlertDto.getDangerTypeId()).orElseThrow(() -> new RuntimeException("Zagrożenie nie zostało znalezione"));
 
+            WaterAlert waterAlert = WaterAlert.builder()
+                    .publishDate(LocalDateTime.now())
+                    .isActive(true)
+                    .description(addAlertDto.getDescription())
+                    .waterDanger(dangerType)
+                    .waterStation(waterStation)
+                    .build();
+            waterAlertRepo.save(waterAlert);
+
+        }
+        else if(addAlertDto.getAlertType()== AlertType.WEATHER) {
+            WeatherStation weatherStation = weatherStationRepo.findById(addAlertDto.getWaterStationId()).orElseThrow(() -> new RuntimeException("Stacja nie została znaleziona"));
+            DangerType dangerType = dangerTypeRepo.findById(addAlertDto.getDangerTypeId()).orElseThrow(() -> new RuntimeException("Zagrożenie nie zostało znalezione"));
+
+            WeatherAlert weatherAlert = WeatherAlert.builder()
+                    .publishDate(LocalDateTime.now())
+                    .isActive(true)
+                    .description(addAlertDto.getDescription())
+                    .weatherDanger(dangerType)
+                    .weatherStation(weatherStation)
+                    .build();
+            weatherAlertRepo.save(weatherAlert);
+        }
+        else if(addAlertDto.getAlertType()== AlertType.OTHER) {
+            DangerType dangerType = dangerTypeRepo.findById(addAlertDto.getDangerTypeId()).orElseThrow(() -> new RuntimeException("Zagrożenie nie zostało znalezione"));
+
+            Alert alert = Alert.builder()
+                    .publishDate(LocalDateTime.now())
+                    .isActive(true)
+                    .lat(addAlertDto.getLat())
+                    .lng(addAlertDto.getLng())
+                    .description(addAlertDto.getDescription())
+                    .dngId(dangerType)
+                    .build();
+            alertRepo.save(alert);
         }
         return null;
     }

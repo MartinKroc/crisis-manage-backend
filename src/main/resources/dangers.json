@@ -1,0 +1,26 @@
+[
+  {
+    "dangerScale": 3,
+    "description": "Podtopienie"
+  },
+  {
+    "dangerScale": 2,
+    "description": "Mróz"
+  },
+  {
+    "dangerScale": 2,
+    "description": "Upały"
+  },
+  {
+    "dangerScale": 4,
+    "description": "Pożar"
+  },
+  {
+    "dangerScale": 3,
+    "description": "Smog"
+  },
+  {
+    "dangerScale": 5,
+    "description": "Wypadek"
+  }
+]

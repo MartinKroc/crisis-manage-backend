@@ -3,11 +3,14 @@ package com.crisis.management.controllers;
 import com.crisis.management.dto.AddAlertDto;
 import com.crisis.management.dto.AlertDto;
 import com.crisis.management.dto.AlertSuggestionDto;
+import com.crisis.management.dto.SendAlertEmailDto;
 import com.crisis.management.services.AlertService;
+import com.crisis.management.services.MailService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @RestController
@@ -17,6 +20,7 @@ import java.util.List;
 public class AlertController {
 
     private final AlertService alertService;
+    private final MailService mailService;
 
     @GetMapping
     public AlertDto getAlerts() {
@@ -26,6 +30,11 @@ public class AlertController {
     @PostMapping
     public ResponseEntity<AddAlertDto> addAlert(@RequestBody AddAlertDto addAlertDto) {
         return alertService.postAlert(addAlertDto);
+    }
+
+    @PostMapping("sendmail")
+    public ResponseEntity<String> sendAlertByEmail(@RequestBody SendAlertEmailDto sendAlertEmailDto) throws MessagingException {
+        return mailService.sendAlert(sendAlertEmailDto);
     }
 
     @DeleteMapping

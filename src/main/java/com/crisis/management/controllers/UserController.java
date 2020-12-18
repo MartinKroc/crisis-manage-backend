@@ -46,13 +46,13 @@ public class UserController {
     }
 
     @GetMapping("test2")
-    public String test() {
+    public ResponseEntity<List<WaterM>> test() {
         String uri = "https://danepubliczne.imgw.pl/api/data/hydro/";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<WaterM>> response = restTemplate.exchange(uri, HttpMethod.GET,null, new ParameterizedTypeReference<List<WaterM>>() {
         });
         System.out.println(response);
-        return "ok";
+        return response;
     }
 
     @GetMapping("/send")

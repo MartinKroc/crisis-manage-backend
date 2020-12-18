@@ -3,10 +3,14 @@ package com.crisis.management.dto;
 import com.crisis.management.models.enums.AlertType;
 import lombok.Value;
 
+import java.util.List;
+
 @Value
 public class AddAlertDto {
     private AlertType alertType;
-    private long measureId;
+    private String description;
     private long dangerTypeId;
     private long waterStationId;
+    private String lat;
+    private String lng;
 }

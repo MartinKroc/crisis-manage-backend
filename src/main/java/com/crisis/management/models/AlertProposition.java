@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class AlertProposition {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long alertId;
 
     @Column(nullable = false)

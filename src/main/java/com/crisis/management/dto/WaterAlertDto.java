@@ -12,10 +12,11 @@ import java.time.LocalDateTime;
 public class WaterAlertDto {
     private LocalDateTime publishDate;
     private boolean isActive;
-    private DangerType waterDanger;
-    private WaterStation waterStation;
+    private String description;
+    private int dangerScale;
+    private String waterStationName;
 
     public static WaterAlertDto build(WaterAlert waterAlert) {
-        return new WaterAlertDto(waterAlert.getPublishDate(), waterAlert.isActive(), waterAlert.getWaterDanger(), waterAlert.getWaterStation());
+        return new WaterAlertDto(waterAlert.getPublishDate(), waterAlert.isActive(), waterAlert.getWaterDanger().getDescription(),waterAlert.getWaterDanger().getDangerScale(), waterAlert.getWaterStation().getName());
     };
 }

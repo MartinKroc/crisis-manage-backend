@@ -1,13 +1,7 @@
 package com.crisis.management.db;
 
-import com.crisis.management.models.WaterMeasure;
-import com.crisis.management.models.WaterStation;
-import com.crisis.management.models.WeatherMeasure;
-import com.crisis.management.models.WeatherStation;
-import com.crisis.management.repo.WaterMeasureRepo;
-import com.crisis.management.repo.WaterStationRepo;
-import com.crisis.management.repo.WeatherMeasureRepo;
-import com.crisis.management.repo.WeatherStationRepo;
+import com.crisis.management.models.*;
+import com.crisis.management.repo.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +23,14 @@ public class DBStart implements ApplicationRunner {
     WaterStationRepo waterStationRepo;
     WeatherStationRepo weatherStationRepo;
     WaterMeasureRepo waterMeasureRepo;
+    DangerTypeRepo dangerTypeRepo;
 
     @Autowired
-    public DBStart(WaterStationRepo waterStationRepo, WeatherStationRepo weatherStationRepo, WaterMeasureRepo waterMeasureRepo) {
+    public DBStart(WaterStationRepo waterStationRepo, WeatherStationRepo weatherStationRepo, WaterMeasureRepo waterMeasureRepo, DangerTypeRepo dangerTypeRepo) {
         this.waterStationRepo = waterStationRepo;
         this.weatherStationRepo = weatherStationRepo;
         this.waterMeasureRepo = waterMeasureRepo;
+        this.dangerTypeRepo = dangerTypeRepo;
     }
 
     @Override
@@ -62,6 +58,19 @@ public class DBStart implements ApplicationRunner {
                         }
                 );
                 weatherStations.forEach(el -> weatherStationRepo.save(el));
+            } catch (Error e) {
+                System.out.println("Bład dodawania do bazy danych");
+            }
+        }
+        if (dangerTypeRepo.count() <= 0) {
+            try {
+                ObjectMapper mapperThree = new ObjectMapper();
+                List<DangerType> dangerTypes = mapperThree.readValue(
+                        new File("src/main/resources/dangers.json"),
+                        new TypeReference<List<DangerType>>() {
+                        }
+                );
+                dangerTypes.forEach(el -> dangerTypeRepo.save(el));
             } catch (Error e) {
                 System.out.println("Bład dodawania do bazy danych");
             }

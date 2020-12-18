@@ -14,7 +14,7 @@ import java.util.List;
 public class DangerType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long dangerId;
 
     @Column(nullable = false)
@@ -22,9 +22,6 @@ public class DangerType {
 
     @Column(nullable = true)
     private String description;
-
-/*    @OneToMany(mappedBy = "danger")
-    private List<Alert> alerts;*/
 
     @OneToMany(mappedBy = "waterDanger")
     private List<WaterAlert> waterAlerts;
@@ -34,4 +31,7 @@ public class DangerType {
 
     @OneToMany(mappedBy = "dangerId")
     private List<AlertProposition> alertPropositions;
+
+    @OneToMany(mappedBy = "dngId", fetch = FetchType.LAZY)
+    private List<Alert> alerts;
 }

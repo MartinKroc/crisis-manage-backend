@@ -18,7 +18,7 @@ import java.util.List;
 public class WaterMeasure {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long measureId;
 
     @Column(nullable = false)
@@ -31,7 +31,4 @@ public class WaterMeasure {
     @ManyToOne()
     @JoinColumn(name="station_id")
     private WaterStation station;
-
-    @OneToMany(mappedBy = "waterMeasure")
-    private List<WaterAlert> waterAlerts;
 }

@@ -8,8 +8,9 @@ import java.util.List;
 public class AlertDto {
     private List<WaterAlertDto> waterAlert;
     private List<WeatherAlertDto> weatherAlert;
+    private List<AlertTableDto> alerts;
 
-    public static AlertDto build(List<WaterAlertDto> waterAlertDto, List<WeatherAlertDto> weatherAlertDto) {
-        return new AlertDto(waterAlertDto,weatherAlertDto);
+    public static AlertDto build(List<WaterAlertDto> waterAlertDto, List<WeatherAlertDto> weatherAlertDto, List<AlertTableDto> alerts) {
+        return new AlertDto(waterAlertDto,weatherAlertDto, alerts);
     };
 }
