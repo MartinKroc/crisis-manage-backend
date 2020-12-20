@@ -110,4 +110,18 @@ public class AlertServiceImpl implements AlertService {
         }
         return null;
     }
+
+    @Override
+    public List<AlertStatsDto> getAlertStats() {
+        List<DangerType> dangerTypes = dangerTypeRepo.findAll();
+        List<AlertStatsDto> alertStats = new ArrayList<AlertStatsDto>();
+        dangerTypes.forEach(dangerType -> {
+            int occurrenceWater = dangerType.getWaterAlerts().size();
+            int occurrenceWeather = dangerType.getWeatherAlerts().size();
+            int occurrenceOther = dangerType.getAlerts().size();
+            int occurrence = occurrenceOther + occurrenceWater + occurrenceWeather;
+            alertStats.add(AlertStatsDto.build(dangerType,occurrence));
+        });
+        return alertStats;
+    }
 }

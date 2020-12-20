@@ -33,4 +33,9 @@ public class MeasureController {
     public List<WeatherMeasureDto> getWeatherMeasuresByStationId(@PathVariable("stationId") long stationId) {
         return measureService.getWeatherMeasuresByStationId(stationId);
     }
+
+    @GetMapping("/generate")
+    public String generateRandomMeasures() {
+        return measureService.generateRandomMeasure();
+    }
 }

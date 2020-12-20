@@ -13,7 +13,6 @@ import java.io.Serializable;
 public class WaterM {
     private String id_stacji;
     private String stacja;
-    private String rzeka;
-    private String województwo;
     private String stan_wody;
+    private String stan_wody_data_pomiaru;
 }

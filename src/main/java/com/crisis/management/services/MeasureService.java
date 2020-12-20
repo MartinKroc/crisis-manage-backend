@@ -12,4 +12,5 @@ public interface MeasureService {
     List<WaterMeasureDto> getAllWaterMeasures();
     List<WaterMeasureDto> getWaterMeasuresByStationId(long stationId);
     List<WeatherMeasureDto> getWeatherMeasuresByStationId(long stationId);
+    String generateRandomMeasure();
 }

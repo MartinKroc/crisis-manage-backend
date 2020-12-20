@@ -15,10 +15,11 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SequenceGenerator(name = "seq", initialValue = 271)
 public class WaterMeasure {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private long measureId;
 
     @Column(nullable = false)

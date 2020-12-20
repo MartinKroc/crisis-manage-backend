@@ -1,6 +1,7 @@
 package com.crisis.management.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlertProposition {
@@ -17,10 +19,10 @@ public class AlertProposition {
     private long alertId;
 
     @Column(nullable = false)
-    private String lat;
+    private Double lat;
 
     @Column(nullable = false)
-    private String lng;
+    private Double lng;
 
     @Column(nullable = true)
     private String description;

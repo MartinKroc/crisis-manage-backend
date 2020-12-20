@@ -1,9 +1,6 @@
 package com.crisis.management.controllers;
 
-import com.crisis.management.dto.AddAlertDto;
-import com.crisis.management.dto.AlertDto;
-import com.crisis.management.dto.AlertSuggestionDto;
-import com.crisis.management.dto.SendAlertEmailDto;
+import com.crisis.management.dto.*;
 import com.crisis.management.services.AlertService;
 import com.crisis.management.services.MailService;
 import lombok.AllArgsConstructor;
@@ -50,5 +47,10 @@ public class AlertController {
     @GetMapping("suggestion")
     public List<AlertSuggestionDto> getAlertSug() {
         return alertService.getAlertSuggestions();
+    }
+
+    @GetMapping("stat")
+    public List<AlertStatsDto> getStats() {
+        return alertService.getAlertStats();
     }
 }
