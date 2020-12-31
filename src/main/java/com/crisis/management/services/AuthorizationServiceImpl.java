@@ -97,4 +97,13 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public UserDto deleteEmployee(User user) {
         return null;
     }
+
+    @Override
+    public ResponseEntity<String> changeSettings(SettingsDto settingsDto, String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("użytkownik nie znaleziony"));
+        user.setEmail(settingsDto.getEmail());
+        user.setTel(settingsDto.getPhone());
+        userRepository.save(user);
+        return ResponseEntity.ok("zmieniono dane");
+    }
 }

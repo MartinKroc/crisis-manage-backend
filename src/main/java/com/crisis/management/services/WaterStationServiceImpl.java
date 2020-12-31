@@ -70,24 +70,4 @@ public class WaterStationServiceImpl implements WaterStationService {
         });
         return response;
     }
-
-/*    @Scheduled(fixedRate = 60000)
-    public void testShed() {
-        String uri = "https://danepubliczne.imgw.pl/api/data/hydro/";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WaterM>> response = restTemplate.exchange(uri, HttpMethod.GET,null, new ParameterizedTypeReference<List<WaterM>>() {
-        });
-        response.getBody().forEach(el -> {
-            if(el.getId_stacji().equals("150200090")) {
-                WaterStation station = waterStationRepo.findById(Long.parseLong("9")).orElseThrow(() -> new RuntimeException("Nie znaleziono stacji pogodowej o id"));
-                WaterMeasure waterMeasure = WaterMeasure.builder()
-                        .waterLevel(Integer.parseInt(el.getStan_wody()))
-                        .date(LocalDateTime.parse(el.getStan_wody_data_pomiaru(),formatter))
-                        .station(station)
-                        .build();
-                waterMeasureRepo.save(waterMeasure);
-            }
-        });
-    }*/
 }

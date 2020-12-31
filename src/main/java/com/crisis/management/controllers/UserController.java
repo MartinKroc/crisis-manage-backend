@@ -1,7 +1,9 @@
 package com.crisis.management.controllers;
 
+import com.crisis.management.dto.SettingsDto;
 import com.crisis.management.dto.SignInDto;
 import com.crisis.management.dto.SignUpDto;
+import com.crisis.management.dto.UserDto;
 import com.crisis.management.models.WaterM;
 import com.crisis.management.services.AuthorizationService;
 import com.crisis.management.services.MailService;
@@ -37,6 +39,17 @@ public class UserController {
     @PostMapping("signin")
     public ResponseEntity signinUser(@RequestBody SignInDto signinDto) {
         return authorizationService.loginUser(signinDto);
+    }
+
+    @GetMapping("users")
+    public UserDto getUser(Authentication authentication) {
+        return authorizationService.getUser(authentication);
+    }
+
+    @PostMapping("/settings")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<String> changeUserSettings(@RequestBody SettingsDto settingsDto, Authentication authentication) {
+        return authorizationService.changeSettings(settingsDto, AuthMiner.getUsername(authentication));
     }
 
     @GetMapping("test")

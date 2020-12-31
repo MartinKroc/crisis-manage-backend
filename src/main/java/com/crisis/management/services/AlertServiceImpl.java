@@ -124,4 +124,24 @@ public class AlertServiceImpl implements AlertService {
         });
         return alertStats;
     }
+
+    @Override
+    public ResponseEntity<String> changeAlertStatus(AlertType alertType, long alertId) {
+        if(alertType == AlertType.OTHER) {
+            Alert alert = alertRepo.findById(alertId).orElseThrow(() -> new RuntimeException("Alert nie został znaleziony"));
+            alert.setActive(false);
+            alertRepo.save(alert);
+        }
+        else if(alertType == AlertType.WATER) {
+            WaterAlert waterAlert = waterAlertRepo.findById(alertId).orElseThrow(() -> new RuntimeException("Alert nie został znaleziony"));
+            waterAlert.setActive(false);
+            waterAlertRepo.save(waterAlert);
+        }
+        else if(alertType == AlertType.WEATHER) {
+            WeatherAlert weatherAlert = weatherAlertRepo.findById(alertId).orElseThrow(() -> new RuntimeException("Alert nie został znaleziony"));
+            weatherAlert.setActive(false);
+            weatherAlertRepo.save(weatherAlert);
+        }
+        return ResponseEntity.ok("Zmieniono status alertu");
+    }
 }

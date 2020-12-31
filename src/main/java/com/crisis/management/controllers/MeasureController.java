@@ -17,7 +17,6 @@ import java.util.List;
 public class MeasureController {
 
     private final MeasureService measureService;
-    private final WaterStationService waterStationService;
 
     @GetMapping("/water")
     public List<WaterMeasureDto> getWaterMeasures() {

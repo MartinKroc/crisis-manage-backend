@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Value
 public class WeatherAlertDto {
+    private long id;
     private LocalDateTime publishDate;
     private boolean isActive;
     private String description;
@@ -17,6 +18,6 @@ public class WeatherAlertDto {
     private String weatherStationName;
 
     public static WeatherAlertDto build(WeatherAlert weatherAlert) {
-        return new WeatherAlertDto(weatherAlert.getPublishDate(),weatherAlert.isActive(),weatherAlert.getWeatherDanger().getDescription(),weatherAlert.getWeatherDanger().getDangerScale(),weatherAlert.getWeatherStation().getName());
+        return new WeatherAlertDto(weatherAlert.getId(),weatherAlert.getPublishDate(),weatherAlert.isActive(),weatherAlert.getWeatherDanger().getDescription(),weatherAlert.getWeatherDanger().getDangerScale(),weatherAlert.getWeatherStation().getName());
     };
 }

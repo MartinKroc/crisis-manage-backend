@@ -11,6 +11,6 @@ public class AddAlertDto {
     private String description;
     private long dangerTypeId;
     private long waterStationId;
-    private String lat;
-    private String lng;
+    private Double lat;
+    private Double lng;
 }

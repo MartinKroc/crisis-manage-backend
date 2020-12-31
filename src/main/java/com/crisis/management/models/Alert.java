@@ -28,10 +28,10 @@ public class Alert {
     private boolean isActive;
 
     @Column(nullable = false)
-    private String lat;
+    private Double lat;
 
     @Column(nullable = false)
-    private String lng;
+    private Double lng;
 
     @Column(nullable = true)
     private String description;

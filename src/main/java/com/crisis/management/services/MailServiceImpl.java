@@ -55,7 +55,9 @@ public class MailServiceImpl implements MailService {
                     MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
                     mimeMessageHelper.setTo(user.getEmail());
                     mimeMessageHelper.setSubject("Ostrzeżenie hydrologiczne");
-                    mimeMessageHelper.setText("Ostrzeżnie przed zagrożeniem " + waterAlert.getDescription(), true);
+                    mimeMessageHelper.setText("<h2>Uwaga!</h2> Ostrzegamy przed możliwym zagrożeniem, szczegóły poniżej<br>" +
+                            "Stacja: " + waterAlert.getWaterStation().getName() + "<br> Rodzaj zagrożenia: " + waterAlert.getWaterDanger().getDescription() + "<br>" +
+                            "Dodatkowe szczegóły: " + waterAlert.getDescription() + "<br>Dodano: " + waterAlert.getPublishDate() + "<br> Pozdrawiamy, zespół ostrzegania przed kataklizmami", true);
                     javaMailSender.send(mimeMessage);
                 }
                 catch (MessagingException e) {
@@ -65,10 +67,70 @@ public class MailServiceImpl implements MailService {
         }
         else if(sendAlertEmailDto.getAlertType()==AlertType.WEATHER) {
             WeatherAlert weatherAlert = weatherAlertRepo.findById(sendAlertEmailDto.getAlertId()).orElseThrow(() -> new RuntimeException("Nie znaleziono alertu"));
+            users.forEach(user -> {
+                try {
+                    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                    MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+                    mimeMessageHelper.setTo(user.getEmail());
+                    mimeMessageHelper.setSubject("Ostrzeżenie meteorologiczne");
+                    mimeMessageHelper.setText("<h2>Uwaga!</h2> Ostrzegamy przed możliwym zagrożeniem, szczegóły poniżej<br> " +
+                            "Stacja: " + weatherAlert.getWeatherStation().getName() + "<br> Rodzaj zagrożenia: " +weatherAlert.getWeatherDanger().getDescription() + "<br>" +
+                            "Dodatkowe szczegóły: " + weatherAlert.getDescription() + "<br>Dodano " + weatherAlert.getPublishDate() + "<br> Pozdrawiamy, zespół ostrzegania przed kataklizmami", true);
+                    javaMailSender.send(mimeMessage);
+                }
+                catch (MessagingException e) {
+                    System.out.println("Błąd wysyłania maila");
+                }
+            });
         }
         else if(sendAlertEmailDto.getAlertType()==AlertType.OTHER) {
             Alert alert = alertRepo.findById(sendAlertEmailDto.getAlertId()).orElseThrow(() -> new RuntimeException("Nie znaleziono alertu"));
+            users.forEach(user -> {
+                try {
+                    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                    MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+                    mimeMessageHelper.setTo(user.getEmail());
+                    mimeMessageHelper.setSubject("Ostrzeżenie przed zagrożeniem");
+                    mimeMessageHelper.setText("<h2>Uwaga!</h2> Ostrzegamy przed możliwym zagrożeniem, szczegóły poniżej<br> " +
+                            "Rodzaj zagrożenia: " + alert.getDngId().getDescription() + "<br>" + "Dodatkowe szczegóły: " + alert.getDescription() +
+                            "<br>Dokładne współrzędne: " + alert.getLat() + "," + alert.getLng() + "<br>Dodano: " + alert.getPublishDate() + "<br> Pozdrawiamy, zespół ostrzegania przed kataklizmami", true);
+                    javaMailSender.send(mimeMessage);
+                }
+                catch (MessagingException e) {
+                    System.out.println("Błąd wysyłania maila");
+                }
+            });
         }
         return ResponseEntity.ok("Wysłano");
+    }
+
+    @Override
+    public ResponseEntity<String> sendAlertBySms(SendAlertEmailDto sendAlertEmailDto) {
+        List<User> users = userRepo.findAll();
+        if(sendAlertEmailDto.getAlertType()== AlertType.WATER) {
+            WaterAlert waterAlert = waterAlertRepo.findById(sendAlertEmailDto.getAlertId()).orElseThrow(() -> new RuntimeException("Nie znaleziono alertu"));
+            users.forEach(user -> {
+                if(user.getId()==1) {
+                    System.out.println("Wysyłam SMS wodny na numer" + user.getTel() + " o tresci: " + "Uwaga, zagrozenie wodne w stacji: " + waterAlert.getWaterStation().getName() + ". Po szczegóły udaj sie na strone");
+                }
+            });
+        }
+        else if(sendAlertEmailDto.getAlertType()==AlertType.WEATHER) {
+            WeatherAlert weatherAlert = weatherAlertRepo.findById(sendAlertEmailDto.getAlertId()).orElseThrow(() -> new RuntimeException("Nie znaleziono alertu"));
+            users.forEach(user -> {
+                if(user.getId()==1) {
+                    System.out.println("Wysyłam SMS wodny na numer" + user.getTel() + " o tresci: " + "Uwaga, zagrozenie meteo w stacji: " + weatherAlert.getWeatherStation().getName() + ". Po szczegóły udaj sie na strone");
+                }
+            });
+        }
+        else if(sendAlertEmailDto.getAlertType()==AlertType.OTHER) {
+            Alert alert = alertRepo.findById(sendAlertEmailDto.getAlertId()).orElseThrow(() -> new RuntimeException("Nie znaleziono alertu"));
+            users.forEach(user -> {
+                if(user.getId()==1) {
+                    System.out.println("Wysyłam SMS wodny na numer" + user.getTel() + " o tresci: " + "Uwaga, zagrozenie:  " + alert.getDngId().getDescription() + ". Po szczegóły udaj sie na strone");
+                }
+            });
+        }
+        return null;
     }
 }

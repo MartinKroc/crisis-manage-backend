@@ -1,9 +1,6 @@
 package com.crisis.management.services;
 
-import com.crisis.management.dto.EmployeeDto;
-import com.crisis.management.dto.SignInDto;
-import com.crisis.management.dto.SignUpDto;
-import com.crisis.management.dto.UserDto;
+import com.crisis.management.dto.*;
 import com.crisis.management.models.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -26,4 +23,5 @@ public interface AuthorizationService {
 
     UserDto deleteEmployee(User user);
 
+    ResponseEntity<String> changeSettings(SettingsDto settingsDto, String username);
 }
