@@ -4,7 +4,6 @@ import com.crisis.management.dto.SettingsDto;
 import com.crisis.management.dto.SignInDto;
 import com.crisis.management.dto.SignUpDto;
 import com.crisis.management.dto.UserDto;
-import com.crisis.management.models.WaterM;
 import com.crisis.management.services.AuthorizationService;
 import com.crisis.management.services.MailService;
 import com.crisis.management.services.UserService;
@@ -57,24 +56,4 @@ public class UserController {
     public String test(Authentication authentication) {
         return authorizationService.test(AuthMiner.getUsername(authentication));
     }
-
-    @GetMapping("test2")
-    public ResponseEntity<List<WaterM>> test() {
-        String uri = "https://danepubliczne.imgw.pl/api/data/hydro/";
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WaterM>> response = restTemplate.exchange(uri, HttpMethod.GET,null, new ParameterizedTypeReference<List<WaterM>>() {
-        });
-        System.out.println(response);
-        return response;
-    }
-
-    @GetMapping("/send")
-    public String sendMail() throws MessagingException {
-        mailService.sendMail("marcin1303@poczta.onet.pl",
-                "Wygrałeś",
-                "<b>1000 000 zł</b><br>:P", true);
-        return "wysłano";
-    }
-
-
 }

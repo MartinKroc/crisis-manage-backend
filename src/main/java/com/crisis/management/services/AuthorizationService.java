@@ -19,8 +19,6 @@ public interface AuthorizationService {
 
     UserDto getUser(Authentication authentication);
 
-    EmployeeDto createEmployee(User user, EmployeeDto employeeDto);
-
     UserDto deleteEmployee(User user);
 
     ResponseEntity<String> changeSettings(SettingsDto settingsDto, String username);

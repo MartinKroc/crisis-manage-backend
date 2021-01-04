@@ -10,13 +10,16 @@ import com.crisis.management.repo.AlertRepo;
 import com.crisis.management.repo.UserRepo;
 import com.crisis.management.repo.WaterAlertRepo;
 import com.crisis.management.repo.WeatherAlertRepo;
+import com.twilio.Twilio;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
@@ -111,7 +114,14 @@ public class MailServiceImpl implements MailService {
             WaterAlert waterAlert = waterAlertRepo.findById(sendAlertEmailDto.getAlertId()).orElseThrow(() -> new RuntimeException("Nie znaleziono alertu"));
             users.forEach(user -> {
                 if(user.getId()==1) {
-                    System.out.println("Wysyłam SMS wodny na numer" + user.getTel() + " o tresci: " + "Uwaga, zagrozenie wodne w stacji: " + waterAlert.getWaterStation().getName() + ". Po szczegóły udaj sie na strone");
+                    String messText = "Uwaga, zagrozenie wodne w stacji: " + waterAlert.getWaterStation().getName() + ". Po szczegóły udaj sie na strone";
+/*                    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+                    Message message = Message.creator(new PhoneNumber("+48" + user.getTel()),
+                            new PhoneNumber("+18315087366"),
+                            messText).create();
+
+                    System.out.println(message.getSid());*/
+                    System.out.println("Wysyłam SMS wodny na numer" + "+48" + user.getTel() + " o tresci: " + messText);
                 }
             });
         }

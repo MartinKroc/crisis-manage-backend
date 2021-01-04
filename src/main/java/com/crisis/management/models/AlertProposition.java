@@ -27,9 +27,6 @@ public class AlertProposition {
     @Column(nullable = true)
     private String description;
 
-    @Column(nullable = true)
-    private String image;
-
     @Column
     private int points;
 

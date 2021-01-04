@@ -89,11 +89,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public EmployeeDto createEmployee(User user, EmployeeDto employeeDto) {
-        return null;
-    }
-
-    @Override
     public UserDto deleteEmployee(User user) {
         return null;
     }

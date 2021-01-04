@@ -44,10 +44,10 @@ public class AlertServiceImpl implements AlertService {
             }
         });
         weatherMeasures.forEach(weatherMeasure -> {
-            if(weatherMeasure.getSmogLevel()>7) {
+            if(weatherMeasure.getSmogLevel()>5) {
                 alertSuggestions.add(AlertSuggestionDto.buildForWeather(weatherMeasure,"Smog","Przekroczono bezpieczny poziom smogu"));
             }
-            if(weatherMeasure.getTemp()<-2) {
+            if(weatherMeasure.getTemp()<-1) {
                 alertSuggestions.add(AlertSuggestionDto.buildForWeather(weatherMeasure,"Mróz","Przymrozek"));
             }
             else if(weatherMeasure.getTemp()>33) {

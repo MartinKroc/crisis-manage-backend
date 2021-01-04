@@ -33,9 +33,6 @@ public class User {
     @Column(nullable = false, unique = true)
     private String tel;
 
-    @OneToOne(mappedBy = "userId", orphanRemoval = true)
-    private Employee employee;
-
     @OneToMany(mappedBy = "user")
     private List<AlertProposition> alertPropositions;
 

@@ -2,7 +2,6 @@ package com.crisis.management.services;
 
 import com.crisis.management.dto.WaterStationDto;
 import com.crisis.management.dto.WeatherStationDto;
-import com.crisis.management.models.WaterM;
 import com.crisis.management.models.WaterMeasure;
 import com.crisis.management.models.WaterStation;
 import com.crisis.management.repo.WaterMeasureRepo;
@@ -12,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -50,7 +48,7 @@ public class WaterStationServiceImpl implements WaterStationService {
         return WeatherStationDto.build(weatherStationRepo.findById(stationId).orElseThrow(() -> new RuntimeException("Nie znaleziono stacji pogodowej o id" + stationId)));
     }
 
-    @Override
+/*    @Override
     public ResponseEntity<List<WaterM>> updateWaterStations() {
         String uri = "https://danepubliczne.imgw.pl/api/data/hydro/";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -69,5 +67,5 @@ public class WaterStationServiceImpl implements WaterStationService {
             }
         });
         return response;
-    }
+    }*/
 }

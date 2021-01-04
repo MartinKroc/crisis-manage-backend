@@ -37,7 +37,6 @@ public class AlertPropositionServiceImpl implements AlertPropositionService {
                 .lat(addAlertPropositionDto.getLat())
                 .lng(addAlertPropositionDto.getLng())
                 .description(addAlertPropositionDto.getDescription())
-                .image("test")
                 .isAccepted(false)
                 .user(user)
                 .dangerId(dangerType)
