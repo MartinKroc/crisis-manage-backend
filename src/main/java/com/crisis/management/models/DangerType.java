@@ -32,6 +32,6 @@ public class DangerType {
     @OneToMany(mappedBy = "dangerId")
     private List<AlertProposition> alertPropositions;
 
-    @OneToMany(mappedBy = "dngId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "dngId")
     private List<Alert> alerts;
 }

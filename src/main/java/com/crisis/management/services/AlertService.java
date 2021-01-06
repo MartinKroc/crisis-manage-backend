@@ -13,7 +13,7 @@ import java.util.List;
 public interface AlertService {
     List<AlertSuggestionDto> getAlertSuggestions();
     AlertDto getAlerts();
-    ResponseEntity<AddAlertDto> postAlert(AddAlertDto addAlertDto);
+    long postAlert(AddAlertDto addAlertDto);
     List<AlertStatsDto> getAlertStats();
-    ResponseEntity<String> changeAlertStatus(AlertType alertType, long alertId);
+    long changeAlertStatus(AlertType alertType, long alertId);
 }

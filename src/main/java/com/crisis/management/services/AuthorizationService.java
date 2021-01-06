@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AuthorizationService {
 
-    String test(String username);
-
     ResponseEntity<String> createUser(SignUpDto signUpDto);
 
     ResponseEntity loginUser(SignInDto signInDto);
@@ -22,4 +20,6 @@ public interface AuthorizationService {
     UserDto deleteEmployee(User user);
 
     ResponseEntity<String> changeSettings(SettingsDto settingsDto, String username);
+
+    UserDto createEmployee(User user);
 }

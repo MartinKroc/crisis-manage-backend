@@ -11,6 +11,7 @@ import com.crisis.management.utilities.AuthMiner;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -51,9 +52,8 @@ public class UserController {
         return authorizationService.changeSettings(settingsDto, AuthMiner.getUsername(authentication));
     }
 
-    @GetMapping("test")
-    @PreAuthorize("hasRole('USER')")
-    public String test(Authentication authentication) {
-        return authorizationService.test(AuthMiner.getUsername(authentication));
+    @ExceptionHandler(value = {RuntimeException.class})
+    public ResponseEntity noHandlerFoundException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }

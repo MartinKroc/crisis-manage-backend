@@ -2,25 +2,30 @@ package com.crisis.management.services;
 
 import com.crisis.management.configuration.jwt.JwtProvider;
 import com.crisis.management.dto.*;
+import com.crisis.management.models.AlertProposition;
 import com.crisis.management.models.User;
 import com.crisis.management.models.UserPrincipal;
 import com.crisis.management.models.authority.Role;
 import com.crisis.management.models.authority.RoleName;
+import com.crisis.management.repo.AlertPrepositionRepo;
 import com.crisis.management.repo.RoleRepo;
 import com.crisis.management.repo.UserRepo;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -34,11 +39,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final UserRepo userRepository;
     private final JwtProvider provider;
     private final AuthenticationManager manager;
-
-    @Override
-    public String test(String username) {
-        return "oke";
-    }
+    private final AlertPrepositionRepo alertPrepositionRepo;
 
     @Override
     public ResponseEntity<String> createUser(SignUpDto signUpDto) {
@@ -80,7 +81,16 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public ResponseEntity deleteUser(String username) {
-        return null;
+        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Użytkownik nie został znaleziony"));
+        try {
+            List<AlertProposition> userAlertPropositions = alertPrepositionRepo.findAllByUserId(user.getId()).get();
+            userAlertPropositions.forEach(prep -> prep.setUser(null));
+            alertPrepositionRepo.saveAll(userAlertPropositions);
+        } catch (Exception e) {
+            logger.info("Delete propositions", e.getMessage());
+        }
+        this.userRepository.delete(user);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @Override
@@ -89,8 +99,17 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public UserDto deleteEmployee(User user) {
-        return null;
+    public UserDto deleteEmployee(User usr) {
+        User updateUser = userRepository.findByUsername(usr.getUsername()).orElseThrow(() ->
+                new UsernameNotFoundException("User not found: " + usr.getUsername()));
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleRepository
+                .findByName(RoleName.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("Rola nie istnieje")));
+        updateUser.setRoles(roles);
+        userRepository.save(updateUser);
+        return UserDto.build(usr);
     }
 
     @Override
@@ -100,5 +119,21 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         user.setTel(settingsDto.getPhone());
         userRepository.save(user);
         return ResponseEntity.ok("zmieniono dane");
+    }
+
+    @Override
+    public UserDto createEmployee(User user) {
+        User futureEmployee = userRepository.findByUsername(user.getUsername()).orElseThrow(() ->
+                new UsernameNotFoundException("User not found: " + user.getUsername()));
+        Role role = roleRepository
+                .findByName(RoleName.ROLE_EMPLOYEE)
+                .orElseThrow(() -> new RuntimeException("Rola nie istnieje"));
+
+        Set<Role> tempSetRoles = futureEmployee.getRoles();
+        tempSetRoles.add(role);
+        futureEmployee.setRoles(tempSetRoles);
+        userRepository.save(futureEmployee);
+
+        return UserDto.build(user);
     }
 }

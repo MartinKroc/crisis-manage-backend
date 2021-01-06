@@ -36,7 +36,7 @@ public class Alert {
     @Column(nullable = true)
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     @JoinColumn(name = "danger_id")
     private DangerType dngId;
 }

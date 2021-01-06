@@ -67,7 +67,7 @@ public class AlertServiceImpl implements AlertService {
     }
 
     @Override
-    public ResponseEntity<AddAlertDto> postAlert(AddAlertDto addAlertDto) {
+    public long postAlert(AddAlertDto addAlertDto) {
         if(addAlertDto.getAlertType()== AlertType.WATER) {
             WaterStation waterStation = waterStationRepo.findById(addAlertDto.getWaterStationId()).orElseThrow(() -> new RuntimeException("Stacja nie została znaleziona"));
             DangerType dangerType = dangerTypeRepo.findById(addAlertDto.getDangerTypeId()).orElseThrow(() -> new RuntimeException("Zagrożenie nie zostało znalezione"));
@@ -80,6 +80,7 @@ public class AlertServiceImpl implements AlertService {
                     .waterStation(waterStation)
                     .build();
             waterAlertRepo.save(waterAlert);
+            return waterAlert.getId();
 
         }
         else if(addAlertDto.getAlertType()== AlertType.WEATHER) {
@@ -94,6 +95,7 @@ public class AlertServiceImpl implements AlertService {
                     .weatherStation(weatherStation)
                     .build();
             weatherAlertRepo.save(weatherAlert);
+            return weatherAlert.getId();
         }
         else if(addAlertDto.getAlertType()== AlertType.OTHER) {
             DangerType dangerType = dangerTypeRepo.findById(addAlertDto.getDangerTypeId()).orElseThrow(() -> new RuntimeException("Zagrożenie nie zostało znalezione"));
@@ -107,8 +109,9 @@ public class AlertServiceImpl implements AlertService {
                     .dngId(dangerType)
                     .build();
             alertRepo.save(alert);
+            return alert.getId();
         }
-        return null;
+        return 0;
     }
 
     @Override
@@ -126,7 +129,7 @@ public class AlertServiceImpl implements AlertService {
     }
 
     @Override
-    public ResponseEntity<String> changeAlertStatus(AlertType alertType, long alertId) {
+    public long changeAlertStatus(AlertType alertType, long alertId) {
         if(alertType == AlertType.OTHER) {
             Alert alert = alertRepo.findById(alertId).orElseThrow(() -> new RuntimeException("Alert nie został znaleziony"));
             alert.setActive(false);
@@ -142,6 +145,6 @@ public class AlertServiceImpl implements AlertService {
             weatherAlert.setActive(false);
             weatherAlertRepo.save(weatherAlert);
         }
-        return ResponseEntity.ok("Zmieniono status alertu");
+        return alertId;
     }
 }
