@@ -6,4 +6,5 @@ import lombok.Value;
 public class SettingsDto {
     private String email;
     private String phone;
+    private String town;
 }

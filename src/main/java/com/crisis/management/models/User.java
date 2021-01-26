@@ -33,17 +33,21 @@ public class User {
     @Column(nullable = false, unique = true)
     private String tel;
 
+    @Column(nullable = false)
+    private String town;
+
     @OneToMany(mappedBy = "user")
     private List<AlertProposition> alertPropositions;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    public User(String username, String password, String email, String tel, Set<Role> roles) {
+    public User(String username, String password, String email, String tel, String town, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.tel = tel;
+        this.town = town;
         this.roles = roles;
     }
 

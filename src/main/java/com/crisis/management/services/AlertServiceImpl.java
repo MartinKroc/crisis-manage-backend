@@ -105,6 +105,7 @@ public class AlertServiceImpl implements AlertService {
                     .isActive(true)
                     .lat(addAlertDto.getLat())
                     .lng(addAlertDto.getLng())
+                    .alertTown(addAlertDto.getTown())
                     .description(addAlertDto.getDescription())
                     .dngId(dangerType)
                     .build();

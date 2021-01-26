@@ -25,6 +25,9 @@ public class WaterStation {
     private Double lng;
 
     @Column(nullable = false)
+    private String waterTown;
+
+    @Column(nullable = false)
     private String name;
 
     @Column

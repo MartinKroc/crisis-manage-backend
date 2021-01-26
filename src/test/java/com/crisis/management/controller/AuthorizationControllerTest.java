@@ -60,7 +60,7 @@ public class AuthorizationControllerTest {
     @Test
     void createUser_loginUser_checkAuthorities_delete() throws Exception {
 
-        SignUpDto signUpDto = new SignUpDto("tester123", "test@gmail.com", "123123123", "test123");
+        SignUpDto signUpDto = new SignUpDto("tester123", "test@gmail.com", "Kielce", "123123123", "test123", false);
         try {
             authorizationService.deleteUser(signUpDto.getUsername());
         } catch (Exception e) {
@@ -96,7 +96,7 @@ public class AuthorizationControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        SettingsDto settingsDto = new SettingsDto("teste@gmail.com","222333444");
+        SettingsDto settingsDto = new SettingsDto("teste@gmail.com","222333444", "Umer");
 
         mockMvc.perform(post("/api/user/settings")
                 .header("authorization", "Bearer " + token)

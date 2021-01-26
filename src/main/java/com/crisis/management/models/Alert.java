@@ -33,6 +33,9 @@ public class Alert {
     @Column(nullable = false)
     private Double lng;
 
+    @Column(nullable = false)
+    private String alertTown;
+
     @Column(nullable = true)
     private String description;
 

@@ -24,6 +24,9 @@ public class WeatherStation {
     private Double lng;
 
     @Column(nullable = false)
+    private String weatherTown;
+
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "weatherstation")

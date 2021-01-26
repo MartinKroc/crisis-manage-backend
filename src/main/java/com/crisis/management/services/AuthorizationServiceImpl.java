@@ -57,9 +57,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 passwordEncoder.encode(signUpDto.getPassword()),
                 signUpDto.getEmail(),
                 signUpDto.getPhone(),
+                signUpDto.getTown(),
                 roles);
 
         userRepository.save(user);
+
+        if(signUpDto.isEmployee()) {
+            createEmployee(user);
+        }
 
         return ResponseEntity.ok("Użytkownik pomyślnie został zarejestrowany");
     }
@@ -117,6 +122,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("użytkownik nie znaleziony"));
         user.setEmail(settingsDto.getEmail());
         user.setTel(settingsDto.getPhone());
+        user.setTown(settingsDto.getTown());
         userRepository.save(user);
         return ResponseEntity.ok("zmieniono dane");
     }

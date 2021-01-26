@@ -2,61 +2,73 @@
   {
     "lat": 50.868599,
     "lng": 20.621208,
+    "weatherTown": "Kielce",
     "name": "stacja pogodowa Żytnia"
   },
   {
     "lat": 51.107384,
     "lng": 20.850480,
+    "weatherTown": "Skarżysko-Kamienna",
     "name": "stacja pogodowa Skarżysko-Kamienna"
   },
   {
     "lat": 50.935908,
     "lng": 21.381508,
+    "weatherTown": "Ostrowiec-Świętokrzyski",
     "name": "stacja pogodowa Ostrowiec"
   },
   {
     "lat": 50.642708,
     "lng": 20.298680,
+    "weatherTown": "Jędrzejów",
     "name": "stacja pogodowa Jędrzejów"
   },
   {
     "lat": 50.851301,
     "lng": 19.968609,
+    "weatherTown": "Strawczyn",
     "name": "stacja pogodowa Włoszczowa"
   },
   {
     "lat": 50.942291,
     "lng": 20.418945,
+    "weatherTown": "Strawczyn",
     "name": "stacja pogodowa Strawczyn"
   },
   {
     "lat": 51.194028,
     "lng": 20.410664,
+    "weatherTown": "Końskie",
     "name": "stacja pogodowa Końskie"
   },
   {
     "lat": 50.566152,
     "lng": 21.171840,
+    "weatherTown": "Staszów",
     "name": "stacja pogodowa Staszów"
   },
   {
     "lat": 50.801110,
     "lng": 20.469768,
+    "weatherTown": "Chęciny",
     "name": "stacja pogodowa Chęciny"
   },
   {
     "lat": 50.947591,
     "lng": 20.250928,
+    "weatherTown": "Łopuszno",
     "name": "stacja pogodowa Łopuszno"
   },
   {
     "lat": 50.675890,
     "lng": 21.044134,
+    "weatherTown": "Kielce",
     "name": "stacja pogodowa Raków"
   },
   {
     "lat": 50.618845,
     "lng": 20.747040,
+    "weatherTown": "Kielce",
     "name": "stacja pogodowa Chmielnik"
   }
 ]

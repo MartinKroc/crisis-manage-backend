@@ -90,7 +90,7 @@ public class AlertControllerTest {
     @Test
     void should_post_alert() throws Exception {
 
-        AddAlertDto addAlertDto = new AddAlertDto(AlertType.WATER,"sssddd",1,1,33.3,22.1);
+        AddAlertDto addAlertDto = new AddAlertDto(AlertType.WATER,"sssddd",1,1,"Kielce",33.3,22.1);
         MvcResult r = mockMvc.perform(post("/api/alert")
                 .header("authorization", addUser.getBearerToken())
                 .content(objectMapper.writeValueAsString(addAlertDto))
@@ -106,7 +106,7 @@ public class AlertControllerTest {
     @Test
     void should_change_alert_status() throws Exception {
 
-        AddAlertDto addAlertDto = new AddAlertDto(AlertType.WATER,"sssddd",1,1,33.3,22.1);
+        AddAlertDto addAlertDto = new AddAlertDto(AlertType.WATER,"sssddd",1,1,"Kielce",33.3,22.1);
         MvcResult r = mockMvc.perform(post("/api/alert")
                 .header("authorization", addUser.getBearerToken())
                 .content(objectMapper.writeValueAsString(addAlertDto))

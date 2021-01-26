@@ -2,6 +2,7 @@
   {
     "lat": 50.873935,
     "lng": 20.626804,
+    "waterTown": "Kielce",
     "name": "Silnica centrum Kielc",
     "warningLevel": 234,
     "alertLevel": 251
@@ -9,6 +10,7 @@
   {
     "lat": 51.083387,
     "lng": 20.856685,
+    "waterTown": "Skarżysko-Kamienna",
     "name": "Zalew Rejowski",
     "warningLevel": 201,
     "alertLevel": 234
@@ -16,20 +18,23 @@
   {
     "lat": 51.023338,
     "lng": 21.083907,
-    "name": "Rzeka kamienna",
+    "waterTown": "Ostrowiec-Świętokrzyski",
+    "name": "Rzeka Kamienna",
     "warningLevel": 302,
     "alertLevel": 345
   },
   {
     "lat": 50.772905,
     "lng": 20.462596,
-    "name": "Rzeka Czarna Nida Chęciny",
+    "name": "Chęciny",
+    "waterTown": "Rzeka Czarna Nida Chęciny",
     "warningLevel": 332,
     "alertLevel": 350
   },
   {
     "lat": 50.633925,
     "lng": 20.324233,
+    "waterTown": "Jędrzejów",
     "name": "Rzeka Brześnica Jędrzejów",
     "warningLevel": 233,
     "alertLevel": 256
@@ -37,6 +42,7 @@
   {
     "lat": 50.945289,
     "lng":  20.420890,
+    "waterTown": "Strawczyn",
     "name": "Zalew Strawczyn",
     "warningLevel": 130,
     "alertLevel": 140
@@ -44,6 +50,7 @@
   {
     "lat": 50.984714,
     "lng": 20.586646,
+    "waterTown": "Umer",
     "name": "Rzeka Bobrza Umer",
     "warningLevel": 233,
     "alertLevel": 265
@@ -51,6 +58,7 @@
   {
     "lat": 50.834274,
     "lng": 20.535082,
+    "waterTown": "Kielce",
     "name": "Rzeka Bobrza Słowik",
     "warningLevel": 333,
     "alertLevel": 360
@@ -58,6 +66,7 @@
   {
     "lat": 50.858092,
     "lng": 20.708600,
+    "waterTown": "Kielce",
     "name": "Rzeka Lubrzanka",
     "warningLevel": 270,
     "alertLevel": 302

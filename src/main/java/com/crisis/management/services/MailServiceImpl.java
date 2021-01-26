@@ -33,6 +33,8 @@ public class MailServiceImpl implements MailService {
     private WaterAlertRepo waterAlertRepo;
     private WeatherAlertRepo weatherAlertRepo;
     private AlertRepo alertRepo;
+    public static final String ACCOUNT_SID = "";
+    public static final String AUTH_TOKEN = "";
 
     @Override
     public void sendMail(String to,
@@ -53,54 +55,60 @@ public class MailServiceImpl implements MailService {
         if(sendAlertEmailDto.getAlertType()== AlertType.WATER) {
             WaterAlert waterAlert = waterAlertRepo.findById(sendAlertEmailDto.getAlertId()).orElseThrow(() -> new RuntimeException("Nie znaleziono alertu"));
             users.forEach(user -> {
-                try {
-                    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-                    MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-                    mimeMessageHelper.setTo(user.getEmail());
-                    mimeMessageHelper.setSubject("Ostrzeżenie hydrologiczne");
-                    mimeMessageHelper.setText("<h2>Uwaga!</h2> Ostrzegamy przed możliwym zagrożeniem, szczegóły poniżej<br>" +
-                            "Stacja: " + waterAlert.getWaterStation().getName() + "<br> Rodzaj zagrożenia: " + waterAlert.getWaterDanger().getDescription() + "<br>" +
-                            "Dodatkowe szczegóły: " + waterAlert.getDescription() + "<br>Dodano: " + waterAlert.getPublishDate() + "<br> Pozdrawiamy, zespół ostrzegania przed kataklizmami", true);
-                    javaMailSender.send(mimeMessage);
-                }
-                catch (MessagingException e) {
-                    System.out.println("Błąd wysyłania maila");
+                if(user.getTown().equals(waterAlert.getWaterStation().getWaterTown()) || user.getTown().equals("Całe Województwo")) {
+                    try {
+                        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+                        mimeMessageHelper.setTo(user.getEmail());
+                        mimeMessageHelper.setSubject("Ostrzeżenie hydrologiczne");
+                        mimeMessageHelper.setText("<h2>Uwaga!</h2> Ostrzegamy przed możliwym zagrożeniem, szczegóły poniżej<br>" +
+                                "Stacja: " + waterAlert.getWaterStation().getName() + "<br> Rodzaj zagrożenia: " + waterAlert.getWaterDanger().getDescription() + "<br>" +
+                                "Dodatkowe szczegóły: " + waterAlert.getDescription() + "<br>Dodano: " + waterAlert.getPublishDate() + "<br> Pozdrawiamy, zespół ostrzegania przed kataklizmami", true);
+                        javaMailSender.send(mimeMessage);
+                    }
+                    catch (MessagingException e) {
+                        System.out.println("Błąd wysyłania maila");
+                    }
                 }
             });
         }
         else if(sendAlertEmailDto.getAlertType()==AlertType.WEATHER) {
             WeatherAlert weatherAlert = weatherAlertRepo.findById(sendAlertEmailDto.getAlertId()).orElseThrow(() -> new RuntimeException("Nie znaleziono alertu"));
             users.forEach(user -> {
-                try {
-                    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-                    MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-                    mimeMessageHelper.setTo(user.getEmail());
-                    mimeMessageHelper.setSubject("Ostrzeżenie meteorologiczne");
-                    mimeMessageHelper.setText("<h2>Uwaga!</h2> Ostrzegamy przed możliwym zagrożeniem, szczegóły poniżej<br> " +
-                            "Stacja: " + weatherAlert.getWeatherStation().getName() + "<br> Rodzaj zagrożenia: " +weatherAlert.getWeatherDanger().getDescription() + "<br>" +
-                            "Dodatkowe szczegóły: " + weatherAlert.getDescription() + "<br>Dodano " + weatherAlert.getPublishDate() + "<br> Pozdrawiamy, zespół ostrzegania przed kataklizmami", true);
-                    javaMailSender.send(mimeMessage);
-                }
-                catch (MessagingException e) {
-                    System.out.println("Błąd wysyłania maila");
+                if(user.getTown().equals(weatherAlert.getWeatherStation().getWeatherTown()) || user.getTown().equals("Całe Województwo")) {
+                    try {
+                        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+                        mimeMessageHelper.setTo(user.getEmail());
+                        mimeMessageHelper.setSubject("Ostrzeżenie meteorologiczne");
+                        mimeMessageHelper.setText("<h2>Uwaga!</h2> Ostrzegamy przed możliwym zagrożeniem, szczegóły poniżej<br> " +
+                                "Stacja: " + weatherAlert.getWeatherStation().getName() + "<br> Rodzaj zagrożenia: " +weatherAlert.getWeatherDanger().getDescription() + "<br>" +
+                                "Dodatkowe szczegóły: " + weatherAlert.getDescription() + "<br>Dodano " + weatherAlert.getPublishDate() + "<br> Pozdrawiamy, zespół ostrzegania przed kataklizmami", true);
+                        javaMailSender.send(mimeMessage);
+                    }
+                    catch (MessagingException e) {
+                        System.out.println("Błąd wysyłania maila");
+                    }
                 }
             });
         }
         else if(sendAlertEmailDto.getAlertType()==AlertType.OTHER) {
             Alert alert = alertRepo.findById(sendAlertEmailDto.getAlertId()).orElseThrow(() -> new RuntimeException("Nie znaleziono alertu"));
             users.forEach(user -> {
-                try {
-                    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-                    MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-                    mimeMessageHelper.setTo(user.getEmail());
-                    mimeMessageHelper.setSubject("Ostrzeżenie przed zagrożeniem");
-                    mimeMessageHelper.setText("<h2>Uwaga!</h2> Ostrzegamy przed możliwym zagrożeniem, szczegóły poniżej<br> " +
-                            "Rodzaj zagrożenia: " + alert.getDngId().getDescription() + "<br>" + "Dodatkowe szczegóły: " + alert.getDescription() +
-                            "<br>Dokładne współrzędne: " + alert.getLat() + "," + alert.getLng() + "<br>Dodano: " + alert.getPublishDate() + "<br> Pozdrawiamy, zespół ostrzegania przed kataklizmami", true);
-                    javaMailSender.send(mimeMessage);
-                }
-                catch (MessagingException e) {
-                    System.out.println("Błąd wysyłania maila");
+                if(user.getTown().equals(alert.getAlertTown()) || user.getTown().equals("Całe Województwo")) {
+                    try {
+                        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+                        mimeMessageHelper.setTo(user.getEmail());
+                        mimeMessageHelper.setSubject("Ostrzeżenie przed zagrożeniem");
+                        mimeMessageHelper.setText("<h2>Uwaga!</h2> Ostrzegamy przed możliwym zagrożeniem, szczegóły poniżej<br> " +
+                                "Rodzaj zagrożenia: " + alert.getDngId().getDescription() + "<br>" + "Dodatkowe szczegóły: " + alert.getDescription() +
+                                "<br>Dokładne współrzędne: " + alert.getLat() + "," + alert.getLng() + "<br>Dodano: " + alert.getPublishDate() + "<br> Pozdrawiamy, zespół ostrzegania przed kataklizmami", true);
+                        javaMailSender.send(mimeMessage);
+                    }
+                    catch (MessagingException e) {
+                        System.out.println("Błąd wysyłania maila");
+                    }
                 }
             });
         }
@@ -113,14 +121,14 @@ public class MailServiceImpl implements MailService {
         if(sendAlertEmailDto.getAlertType()== AlertType.WATER) {
             WaterAlert waterAlert = waterAlertRepo.findById(sendAlertEmailDto.getAlertId()).orElseThrow(() -> new RuntimeException("Nie znaleziono alertu"));
             users.forEach(user -> {
-                if(user.getId()==1) {
+                if(user.getTown().equals(waterAlert.getWaterStation().getWaterTown()) || user.getTown().equals("Całe Województwo")) {
                     String messText = "Uwaga, zagrozenie wodne w stacji: " + waterAlert.getWaterStation().getName() + ". Po szczegóły udaj sie na strone";
-/*                    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+                    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
                     Message message = Message.creator(new PhoneNumber("+48" + user.getTel()),
                             new PhoneNumber("+18315087366"),
                             messText).create();
 
-                    System.out.println(message.getSid());*/
+                    System.out.println(message.getSid());
                     System.out.println("Wysyłam SMS wodny na numer" + "+48" + user.getTel() + " o tresci: " + messText);
                 }
             });
@@ -128,16 +136,30 @@ public class MailServiceImpl implements MailService {
         else if(sendAlertEmailDto.getAlertType()==AlertType.WEATHER) {
             WeatherAlert weatherAlert = weatherAlertRepo.findById(sendAlertEmailDto.getAlertId()).orElseThrow(() -> new RuntimeException("Nie znaleziono alertu"));
             users.forEach(user -> {
-                if(user.getId()==1) {
-                    System.out.println("Wysyłam SMS wodny na numer" + user.getTel() + " o tresci: " + "Uwaga, zagrozenie meteo w stacji: " + weatherAlert.getWeatherStation().getName() + ". Po szczegóły udaj sie na strone");
+                if(user.getTown().equals(weatherAlert.getWeatherStation().getWeatherTown()) || user.getTown().equals("Całe Województwo")) {
+                    String messText = "Uwaga, zagrozenie pogodowe w stacji: " + weatherAlert.getWeatherStation().getName() + ". Po szczegóły udaj sie na strone";
+                    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+                    Message message = Message.creator(new PhoneNumber("+48" + user.getTel()),
+                            new PhoneNumber("+18315087366"),
+                            messText).create();
+
+                    System.out.println(message.getSid());
+                    System.out.println("Wysyłam SMS pogodowy na numer" + user.getTel() + " o tresci: " + "Uwaga, zagrozenie meteo w stacji: " + weatherAlert.getWeatherStation().getName() + ". Po szczegóły udaj sie na strone");
                 }
             });
         }
         else if(sendAlertEmailDto.getAlertType()==AlertType.OTHER) {
             Alert alert = alertRepo.findById(sendAlertEmailDto.getAlertId()).orElseThrow(() -> new RuntimeException("Nie znaleziono alertu"));
             users.forEach(user -> {
-                if(user.getId()==1) {
-                    System.out.println("Wysyłam SMS wodny na numer" + user.getTel() + " o tresci: " + "Uwaga, zagrozenie:  " + alert.getDngId().getDescription() + ". Po szczegóły udaj sie na strone");
+                if(user.getTown().equals(alert.getAlertTown()) || user.getTown().equals("Całe Województwo")) {
+                    String messText = "Uwaga, zagrozenie w Twojej okolicy: " + alert.getDngId().getDescription() + ". Po szczegóły udaj sie na strone";
+                    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+                    Message message = Message.creator(new PhoneNumber("+48" + user.getTel()),
+                            new PhoneNumber("+18315087366"),
+                            messText).create();
+
+                    System.out.println(message.getSid());
+                    System.out.println("Wysyłam SMS inny na numer" + user.getTel() + " o tresci: " + "Uwaga, zagrozenie:  " + alert.getDngId().getDescription() + ". Po szczegóły udaj sie na strone");
                 }
             });
         }

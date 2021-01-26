@@ -31,7 +31,7 @@ public class AddUser {
     SignUpDto signUpDto;
 
     public void createUser() throws Exception {
-        signUpDto = new SignUpDto("testuser", "tester@gmail.com", "123123123", "test123");
+        signUpDto = new SignUpDto("testuser", "tester@gmail.com", "Kielce", "123123123", "test123", false);
         try {
             authorizationService.deleteUser(signUpDto.getUsername());
         } catch (Exception e) {
